@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Cliente",
+            "request": "launch",
+            "mainClass": "Modelo.Cliente",
+            "projectName": "Sockets_821e7408"
+        },
+        {
+            "type": "java+",
+            "request": "launch",
+            "name": "Launch Java App"
+        }
+    ]
+}
