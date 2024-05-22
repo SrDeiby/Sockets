@@ -2,6 +2,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CLIENTE",
+            "request": "launch",
+            "mainClass": "Vista.CLIENTE",
+            "projectName": "Sockets_821e7408"
+        },
+        {
+            "type": "java",
+            "name": "JFrameCliente",
+            "request": "launch",
+            "mainClass": "Vista.JFrameCliente",
+            "projectName": "Sockets_821e7408"
+        },
+        {
+            "type": "java",
+            "name": "Servidor",
+            "request": "launch",
+            "mainClass": "Modelo.Servidor",
+            "projectName": "Sockets_821e7408"
+        },
+        {
+            "type": "java",
             "name": "Servidor",
             "request": "launch",
             "mainClass": "Modelo.Servidor",

@@ -12,7 +12,7 @@ public class JFrameServidor extends JFrame {
     
     private JLabel LabelIma;
     private JPanel PanelAzul;
-
+   // static JFrameCliente a = new JFrameCliente();  
     public JFrameServidor() {
         setBounds(0, 0, 800, 500);
         setBackground(new Color(77, 151, 75));
@@ -43,6 +43,7 @@ public class JFrameServidor extends JFrame {
         TextArea text = new TextArea("Solicitudes Del Cliente", 10, 50, TextArea.SCROLLBARS_VERTICAL_ONLY);
         text.setBounds(300, 50, 400, 300);
         text.setEditable(false);
+        //text.setText(a.getMensaje());
         PanelAzul.add(text);
 
         //Botones
