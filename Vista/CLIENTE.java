@@ -24,8 +24,8 @@ public class CLIENTE extends JFrame{
 
 private ImageIcon imagen;
 private Icon icono; 
-private JLabel LabelIma, LabelIma2, LabelIma3, LabelIma4, LabelIma5, LabelIma6;
-private JLabel LabelHabi1;
+private JLabel LabelIma, LabelIma2, LabelIma3, LabelIma4, LabelIma5, LabelIma6, LabelIma7, LabelIma8;
+private JLabel LabEstrella, LabEstrella2, LabEstrella3;
 private JPanel PanelAzul, PanelBlanco, PanelBlanco1, PanelBlanco2;
 public String mensaje;
 private static JTextArea textArea;
@@ -67,8 +67,28 @@ public CLIENTE(){
     this.Pintar(this.LabelIma5, "Imagenes\\Hotel3.jpg");
 
     LabelIma6 = new JLabel();//En este Label se inserta una imagen
-    LabelIma6.setBounds(5, 5, 160, 160);  
+    LabelIma6.setBounds(5, 5, 200, 160);  
     this.Pintar(this.LabelIma6, "Imagenes\\Deams.jpg");
+
+    LabelIma7 = new JLabel();//En este Label se inserta una imagen
+    LabelIma7.setBounds(5, 5, 200, 160);  
+    this.Pintar(this.LabelIma7, "Imagenes\\dreams.jpg");
+
+    LabelIma8 = new JLabel();//En este Label se inserta una imagen
+    LabelIma8.setBounds(5, 5, 200, 160);  
+    this.Pintar(this.LabelIma8, "Imagenes\\suite.jpg");
+
+    LabEstrella = new JLabel();//En este Label se inserta una imagen
+    LabEstrella.setBounds(500, 10, 200, 30);  
+    this.Pintar(this.LabEstrella, "Imagenes\\3Estrellas.png");
+
+    LabEstrella2 = new JLabel();//En este Label se inserta una imagen
+    LabEstrella2.setBounds(500, 10, 200, 30);  
+    this.Pintar(this.LabEstrella2, "Imagenes\\4Estrellas.png");
+
+    LabEstrella3 = new JLabel();//En este Label se inserta una imagen
+    LabEstrella3.setBounds(500, 10, 200, 30);  
+    this.Pintar(this.LabEstrella3, "Imagenes\\5Estrellas.png");
 
     //Creacion del panel principal
     JPanel Panel = new JPanel();
@@ -96,14 +116,16 @@ public CLIENTE(){
     PanelBlanco.setBounds(95, 60, 700, 170);
     PanelBlanco.setBackground(new Color(206, 246, 242));
     PanelBlanco.setLayout(null);
-    PanelBlanco.add(LabelIma6);
+    PanelBlanco.add(LabelIma7);
+    PanelBlanco.add(LabEstrella);
     PanelHabi.add(PanelBlanco);
 
     PanelBlanco1 = new JPanel();
     PanelBlanco1.setBounds(95, 240, 700, 170);
     PanelBlanco1.setBackground(new Color(206, 246, 242));
     PanelBlanco1.setLayout(null);
-   // PanelBlanco1.add(LabelIma6);
+    PanelBlanco1.add(LabelIma6);
+    PanelBlanco1.add(LabEstrella2);
     PanelHabi.add(PanelBlanco1);
     
 
@@ -111,6 +133,8 @@ public CLIENTE(){
     PanelBlanco2.setBounds(95, 420, 700, 170);
     PanelBlanco2.setBackground(new Color(206, 246, 242));
     PanelBlanco2.setLayout(null);
+    PanelBlanco2.add(LabelIma8);
+    PanelBlanco2.add(LabEstrella3);
     PanelHabi.add(PanelBlanco2);
 
     JButton Reservar; 
