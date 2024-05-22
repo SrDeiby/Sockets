@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Servidor",
+            "request": "launch",
+            "mainClass": "Modelo.Servidor",
+            "projectName": "Sockets_3290e9ec"
+        },
+        {
+            "type": "java",
             "name": "Cliente",
             "request": "launch",
             "mainClass": "Modelo.Cliente",
