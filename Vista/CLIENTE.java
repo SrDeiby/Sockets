@@ -29,12 +29,83 @@ private JLabel LabEstrella, LabEstrella2, LabEstrella3;
 private JLabel Lab1, Lab2, Lab3, Lab4, Lab5, Lab6, Lab7, Lab8, Lab9, Lab10, Lab11, Lab12, Lab13, Lab14, Lab15; 
 private JPanel PanelAzul, PanelBlanco, PanelBlanco1, PanelBlanco2;
 public String mensaje;
-private static JTextArea textArea;
-    private static DataOutputStream out;
+public static JTextArea textArea;
+    public static DataOutputStream out;
     public static void main(String[] args) {
       CLIENTE cliente = new CLIENTE();
       cliente.setVisible(true);
-        
+      
+      final String HOST = "192.168.0.13";  // Cambia esta IP por la del servidor
+      final int PUERTO = 1234;
+      DataInputStream in;
+      DataOutputStream out;
+      
+      // Crear la ventana principal
+      JFrame frame = new JFrame("Consultar disponibilidad");
+      frame.setSize(400, 300);
+      frame.setLayout(new BorderLayout());
+      
+      // Crear un área de texto para mostrar los mensajes
+      JTextArea textArea = new JTextArea();
+      textArea.setEditable(false);
+      frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
+      
+      // Crear un panel para el campo de texto y el botón
+      JPanel panel = new JPanel();
+      panel.setLayout(new BorderLayout());
+      
+      // Crear el campo de texto para escribir mensajes
+      JTextField textField = new JTextField();
+      panel.add(textField, BorderLayout.CENTER);
+      
+      // Crear el botón para enviar mensajes
+      JButton sendButton = new JButton("Enviar");
+      panel.add(sendButton, BorderLayout.EAST);
+      
+      frame.add(panel, BorderLayout.SOUTH);
+      
+      // Mostrar la ventana
+      frame.setVisible(true);
+      
+      try {
+          Socket sc = new Socket(HOST, PUERTO);
+          in = new DataInputStream(sc.getInputStream());
+          out = new DataOutputStream(sc.getOutputStream());
+          
+          // Leer mensajes del servidor en un hilo separado
+          Thread serverHandler = new Thread(() -> {
+              try {
+                  while (true) {
+                      String mensaje = in.readUTF();
+                      textArea.append("Servidor: " + mensaje + "\n");
+                  }
+              } catch (IOException ee) {
+                  textArea.append("Error al leer mensaje del servidor: " + ee.getMessage() + "\n");
+              }
+          });
+          serverHandler.start();
+          
+          // Añadir un ActionListener al botón de enviar
+          DataOutputStream finalOut = out;
+          sendButton.addActionListener(new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                  try {
+                      String mensaje = textField.getText();
+                      finalOut.writeUTF(mensaje);
+                      textArea.append("Cliente: " + mensaje + "\n");
+                      textField.setText("");
+                  } catch (IOException ex) {
+                      textArea.append("Error al enviar mensaje: " + ex.getMessage() + "\n");
+                  }
+              }
+          });
+          
+      } catch (IOException eee) {
+          textArea.append("Error al conectar: " + eee.getMessage() + "\n");
+          eee.printStackTrace();
+      }
+  
     }
 
 public CLIENTE(){
@@ -286,75 +357,9 @@ public CLIENTE(){
     Cancelar.addActionListener(new ActionListener() {
         @Override
 public void actionPerformed(ActionEvent e) {
-       final String HOST = "192.168.0.11";  // Cambia esta IP por la del servidor
-      final int PUERTO = 2000;
-      DataInputStream in;    
+   
   
-  // Crear la ventana principal
-  JFrame frame = new JFrame("Cancelar reservacion");
-  frame.setSize(400, 300);
-  frame.setLayout(new BorderLayout());
-  
-  // Crear un área de texto para mostrar los mensajes
-  textArea = new JTextArea();
-  textArea.setEditable(false);
-  frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
-  
-  // Crear un panel para el campo de texto y el botón
-  JPanel panel = new JPanel();
-  panel.setLayout(new BorderLayout());
-  
-  // Crear el campo de texto para escribir mensajes
-  JTextField textField = new JTextField();
-  panel.add(textField, BorderLayout.CENTER);
-  
-  // Crear el botón para enviar mensajes
-  JButton sendButton = new JButton("Enviar");
-  panel.add(sendButton, BorderLayout.EAST);
-  
-  frame.add(panel, BorderLayout.SOUTH);
-  
-  // Mostrar la ventana
-  frame.setVisible(true);
-  
-  try {
-      Socket sc = new Socket(HOST, PUERTO);
-      in = new DataInputStream(sc.getInputStream());
-      out = new DataOutputStream(sc.getOutputStream());
-  
-      // Leer mensajes del servidor en un hilo separado
-      Thread serverHandler = new Thread(() -> {
-          try {
-              while (true) {
-                  String mensaje = in.readUTF();
-                  textArea.append("Servidor: " + mensaje + "\n");
-              }
-          } catch (IOException ee) {
-              textArea.append("Error al leer mensaje del servidor: " + ee.getMessage() + "\n");
-          }
-      });
-      serverHandler.start();
-  
-      // Añadir un ActionListener al botón de enviar
-      sendButton.addActionListener(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-              try {
-                  String mensaje = textField.getText();
-                  out.writeUTF(mensaje);
-                  textArea.append("Cliente: " + mensaje + "\n");
-                  textField.setText("");
-              } catch (IOException ex) {
-                  textArea.append("Error al enviar mensaje: " + ex.getMessage() + "\n");
-              }
-          }
-      });
-  
-  } catch (IOException eee) {
-      textArea.append("Error: " + eee.getMessage() + "\n");
-      eee.printStackTrace();
-  }
-  
+    
 }
 });
     PanelAzul.add(Cancelar);
@@ -369,81 +374,7 @@ public void actionPerformed(ActionEvent e) {
     Con.setContentAreaFilled(false);
     Con.setBorderPainted(false);
     Con.setFocusPainted(false);
-    Con.addActionListener(new ActionListener() {
-                @Override
-        public void actionPerformed(ActionEvent e) {
-        
-            final String HOST = "192.168.0.11";  // Cambia esta IP por la del servidor
-              final int PUERTO = 2000;
-              DataInputStream in;    
-          
-          // Crear la ventana principal
-          JFrame frame = new JFrame("Consultar reservacion");
-          frame.setSize(400, 300);
-          frame.setLayout(new BorderLayout());
-          
-          // Crear un área de texto para mostrar los mensajes
-          textArea = new JTextArea();
-          textArea.setEditable(false);
-          frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
-          
-          // Crear un panel para el campo de texto y el botón
-          JPanel panel = new JPanel();
-          panel.setLayout(new BorderLayout());
-          
-          // Crear el campo de texto para escribir mensajes
-          JTextField textField = new JTextField();
-          panel.add(textField, BorderLayout.CENTER);
-          
-          // Crear el botón para enviar mensajes
-          JButton sendButton = new JButton("Enviar");
-          panel.add(sendButton, BorderLayout.EAST);
-          
-          frame.add(panel, BorderLayout.SOUTH);
-          
-          // Mostrar la ventana
-          frame.setVisible(true);
-          
-          try {
-              Socket sc = new Socket(HOST, PUERTO);
-              in = new DataInputStream(sc.getInputStream());
-              out = new DataOutputStream(sc.getOutputStream());
-          
-              // Leer mensajes del servidor en un hilo separado
-              Thread serverHandler = new Thread(() -> {
-                  try {
-                      while (true) {
-                          String mensaje = in.readUTF();
-                          textArea.append("Servidor: " + mensaje + "\n");
-                      }
-                  } catch (IOException ee) {
-                      textArea.append("Error al leer mensaje del servidor: " + ee.getMessage() + "\n");
-                  }
-              });
-              serverHandler.start();
-          
-              // Añadir un ActionListener al botón de enviar
-              sendButton.addActionListener(new ActionListener() {
-                  @Override
-                  public void actionPerformed(ActionEvent e) {
-                      try {
-                          String mensaje = textField.getText();
-                          out.writeUTF(mensaje);
-                          textArea.append("Cliente: " + mensaje + "\n");
-                          textField.setText("");
-                      } catch (IOException ex) {
-                          textArea.append("Error al enviar mensaje: " + ex.getMessage() + "\n");
-                      }
-                  }
-              });
-          
-          } catch (IOException eee) {
-              textArea.append("Error: " + eee.getMessage() + "\n");
-              eee.printStackTrace();
-          }
-          
-        }
-    });
+
         PanelAzul.add(Con);
       
         JButton ConHo; 
@@ -455,79 +386,7 @@ public void actionPerformed(ActionEvent e) {
         ConHo.setContentAreaFilled(false);
         ConHo.setBorderPainted(false);
         ConHo.setFocusPainted(false);
-        ConHo.addActionListener(new ActionListener() {
-                    @Override
-            public void actionPerformed(ActionEvent e) {
-                final String HOST = "192.168.0.11";  // Cambia esta IP por la del servidor
-                  final int PUERTO = 2000;
-                  DataInputStream in;    
-              
-              // Crear la ventana principal
-              JFrame frame = new JFrame("Consultar Horario limpieza");
-              frame.setSize(400, 300);
-              frame.setLayout(new BorderLayout());
-              
-              // Crear un área de texto para mostrar los mensajes
-              textArea = new JTextArea();
-              textArea.setEditable(false);
-              frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
-              
-              // Crear un panel para el campo de texto y el botón
-              JPanel panel = new JPanel();
-              panel.setLayout(new BorderLayout());
-              
-              // Crear el campo de texto para escribir mensajes
-              JTextField textField = new JTextField();
-              panel.add(textField, BorderLayout.CENTER);
-              
-              // Crear el botón para enviar mensajes
-              JButton sendButton = new JButton("Enviar");
-              panel.add(sendButton, BorderLayout.EAST);
-              
-              frame.add(panel, BorderLayout.SOUTH);
-              
-              // Mostrar la ventana
-              frame.setVisible(true);
-              
-              try {
-                  Socket sc = new Socket(HOST, PUERTO);
-                  in = new DataInputStream(sc.getInputStream());
-                  out = new DataOutputStream(sc.getOutputStream());
-              
-                  // Leer mensajes del servidor en un hilo separado
-                  Thread serverHandler = new Thread(() -> {
-                      try {
-                          while (true) {
-                              String mensaje = in.readUTF();
-                              textArea.append("Servidor: " + mensaje + "\n");
-                          }
-                      } catch (IOException ee) {
-                          textArea.append("Error al leer mensaje del servidor: " + ee.getMessage() + "\n");
-                      }
-                  });
-                  serverHandler.start();
-              
-                  // Añadir un ActionListener al botón de enviar
-                  sendButton.addActionListener(new ActionListener() {
-                      @Override
-                      public void actionPerformed(ActionEvent e) {
-                          try {
-                              String mensaje = textField.getText();
-                              out.writeUTF(mensaje);
-                              textArea.append("Cliente: " + mensaje + "\n");
-                              textField.setText("");
-                          } catch (IOException ex) {
-                              textArea.append("Error al enviar mensaje: " + ex.getMessage() + "\n");
-                          }
-                      }
-                  });
-              
-              } catch (IOException eee) {
-                  textArea.append("Error: " + eee.getMessage() + "\n");
-                  eee.printStackTrace();
-              }
-              }
-        });
+       
             PanelAzul.add(ConHo);    
 
     
@@ -542,75 +401,7 @@ public void actionPerformed(ActionEvent e) {
         @Override
 public void actionPerformed(ActionEvent e) {
  
-  final String HOST = "192.168.0.11";  // Cambia esta IP por la del servidor
-    final int PUERTO = 2000;
-    DataInputStream in;    
-
-// Crear la ventana principal
-JFrame frame = new JFrame("Consultar disponibilidad");
-frame.setSize(400, 300);
-frame.setLayout(new BorderLayout());
-
-// Crear un área de texto para mostrar los mensajes
-textArea = new JTextArea();
-textArea.setEditable(false);
-frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
-
-// Crear un panel para el campo de texto y el botón
-JPanel panel = new JPanel();
-panel.setLayout(new BorderLayout());
-
-// Crear el campo de texto para escribir mensajes
-JTextField textField = new JTextField();
-panel.add(textField, BorderLayout.CENTER);
-
-// Crear el botón para enviar mensajes
-JButton sendButton = new JButton("Enviar");
-panel.add(sendButton, BorderLayout.EAST);
-
-frame.add(panel, BorderLayout.SOUTH);
-
-// Mostrar la ventana
-frame.setVisible(true);
-
-try {
-    Socket sc = new Socket(HOST, PUERTO);
-    in = new DataInputStream(sc.getInputStream());
-    out = new DataOutputStream(sc.getOutputStream());
-
-    // Leer mensajes del servidor en un hilo separado
-    Thread serverHandler = new Thread(() -> {
-        try {
-            while (true) {
-                String mensaje = in.readUTF();
-                textArea.append("Servidor: " + mensaje + "\n");
-            }
-        } catch (IOException ee) {
-            textArea.append("Error al leer mensaje del servidor: " + ee.getMessage() + "\n");
-        }
-    });
-    serverHandler.start();
-
-    // Añadir un ActionListener al botón de enviar
-    sendButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                String mensaje = textField.getText();
-                out.writeUTF(mensaje);
-                textArea.append("Cliente: " + mensaje + "\n");
-                textField.setText("");
-            } catch (IOException ex) {
-                textArea.append("Error al enviar mensaje: " + ex.getMessage() + "\n");
-            }
-        }
-    });
-
-
-} catch (IOException eee) {
-    textArea.append("Error: " + eee.getMessage() + "\n");
-    eee.printStackTrace();
-}
+   
 }
 });
 PanelHabi.add(Consultar);     

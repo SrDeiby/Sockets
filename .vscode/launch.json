@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "JFrameServidor",
+            "request": "launch",
+            "mainClass": "Vista.JFrameServidor",
+            "projectName": "Sockets_821e7408"
+        },
+        {
+            "type": "java",
             "name": "CLIENTE",
             "request": "launch",
             "mainClass": "Vista.CLIENTE",
