@@ -10,7 +10,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -49,11 +48,11 @@ public CLIENTE(){
 
 
     LabelIma = new JLabel();//En este se inserta una imagen
-    LabelIma.setBounds(115, 45, 40, 40);  
+    LabelIma.setBounds(65, 45, 40, 40);  
     this.Pintar(this.LabelIma, "Imagenes\\camaa.png");
 
     LabelIma2 = new JLabel();//En este Label se inserta una imagen
-    LabelIma2.setBounds(245, 45, 60, 50);  
+    LabelIma2.setBounds(215, 45, 60, 50);  
     this.Pintar(this.LabelIma2, "Imagenes\\Cancelar.png");
 
     LabelIma3 = new JLabel();//En este Label se inserta una imagen
@@ -245,7 +244,7 @@ public CLIENTE(){
     JButton Reservar; 
     Reservar = new JButton("Reservar");
     Reservar.setForeground(Color.white);
-    Reservar.setBounds(80, 45, 220, 40);
+    Reservar.setBounds(30, 45, 220, 40);
     Reservar.setContentAreaFilled(false);
     Reservar.setBorderPainted(false);
     Reservar.setFocusPainted(false);
@@ -260,37 +259,295 @@ public CLIENTE(){
     PanelAzul.add(Reservar);
     PanelAzul.add(LabelIma);
 
+    JButton Salir; 
+    Salir = new JButton("Regresar");
+    Salir.setForeground(Color.black);
+    Salir.setBounds(200, 15, 220, 40);
+    Salir.setContentAreaFilled(false);
+    Salir.setBorderPainted(false);
+    Salir.setFocusPainted(false);
+    Salir.addActionListener(new ActionListener() {
+                @Override
+        public void actionPerformed(ActionEvent e) {
+          PanelHabi.setVisible(false);
+          Panel.setVisible(true);
+          setContentPane(Panel);
+        }
+    });
+    PanelHabi.add(Salir);
+
     JButton Cancelar; 
     Cancelar = new JButton("Cancelar");
     Cancelar.setForeground(Color.white);
-    Cancelar.setBounds(210, 45, 220, 40);
+    Cancelar.setBounds(180, 45, 220, 40);
     Cancelar.setContentAreaFilled(false);
     Cancelar.setBorderPainted(false);
     Cancelar.setFocusPainted(false);
+    Cancelar.addActionListener(new ActionListener() {
+        @Override
+public void actionPerformed(ActionEvent e) {
+       final String HOST = "192.168.0.11";  // Cambia esta IP por la del servidor
+      final int PUERTO = 2000;
+      DataInputStream in;    
+  
+  // Crear la ventana principal
+  JFrame frame = new JFrame("Cancelar reservacion");
+  frame.setSize(400, 300);
+  frame.setLayout(new BorderLayout());
+  
+  // Crear un área de texto para mostrar los mensajes
+  textArea = new JTextArea();
+  textArea.setEditable(false);
+  frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
+  
+  // Crear un panel para el campo de texto y el botón
+  JPanel panel = new JPanel();
+  panel.setLayout(new BorderLayout());
+  
+  // Crear el campo de texto para escribir mensajes
+  JTextField textField = new JTextField();
+  panel.add(textField, BorderLayout.CENTER);
+  
+  // Crear el botón para enviar mensajes
+  JButton sendButton = new JButton("Enviar");
+  panel.add(sendButton, BorderLayout.EAST);
+  
+  frame.add(panel, BorderLayout.SOUTH);
+  
+  // Mostrar la ventana
+  frame.setVisible(true);
+  
+  try {
+      Socket sc = new Socket(HOST, PUERTO);
+      in = new DataInputStream(sc.getInputStream());
+      out = new DataOutputStream(sc.getOutputStream());
+  
+      // Leer mensajes del servidor en un hilo separado
+      Thread serverHandler = new Thread(() -> {
+          try {
+              while (true) {
+                  String mensaje = in.readUTF();
+                  textArea.append("Servidor: " + mensaje + "\n");
+              }
+          } catch (IOException ee) {
+              textArea.append("Error al leer mensaje del servidor: " + ee.getMessage() + "\n");
+          }
+      });
+      serverHandler.start();
+  
+      // Añadir un ActionListener al botón de enviar
+      sendButton.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              try {
+                  String mensaje = textField.getText();
+                  out.writeUTF(mensaje);
+                  textArea.append("Cliente: " + mensaje + "\n");
+                  textField.setText("");
+              } catch (IOException ex) {
+                  textArea.append("Error al enviar mensaje: " + ex.getMessage() + "\n");
+              }
+          }
+      });
+  
+  } catch (IOException eee) {
+      textArea.append("Error: " + eee.getMessage() + "\n");
+      eee.printStackTrace();
+  }
+  
+}
+});
     PanelAzul.add(Cancelar);
     PanelAzul.add(LabelIma2);
     
+    JButton Con; 
+    Con = new JButton("<html><body>" + 
+    "<p style='text-align: center;'>Consultar</p>" + 
+    "<p style='text-align: center;'>Reservacion<html></p>");
+    Con.setForeground(Color.white);
+    Con.setBounds(370, 45, 220, 40);
+    Con.setContentAreaFilled(false);
+    Con.setBorderPainted(false);
+    Con.setFocusPainted(false);
+    Con.addActionListener(new ActionListener() {
+                @Override
+        public void actionPerformed(ActionEvent e) {
+        
+            final String HOST = "192.168.0.11";  // Cambia esta IP por la del servidor
+              final int PUERTO = 2000;
+              DataInputStream in;    
+          
+          // Crear la ventana principal
+          JFrame frame = new JFrame("Consultar reservacion");
+          frame.setSize(400, 300);
+          frame.setLayout(new BorderLayout());
+          
+          // Crear un área de texto para mostrar los mensajes
+          textArea = new JTextArea();
+          textArea.setEditable(false);
+          frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
+          
+          // Crear un panel para el campo de texto y el botón
+          JPanel panel = new JPanel();
+          panel.setLayout(new BorderLayout());
+          
+          // Crear el campo de texto para escribir mensajes
+          JTextField textField = new JTextField();
+          panel.add(textField, BorderLayout.CENTER);
+          
+          // Crear el botón para enviar mensajes
+          JButton sendButton = new JButton("Enviar");
+          panel.add(sendButton, BorderLayout.EAST);
+          
+          frame.add(panel, BorderLayout.SOUTH);
+          
+          // Mostrar la ventana
+          frame.setVisible(true);
+          
+          try {
+              Socket sc = new Socket(HOST, PUERTO);
+              in = new DataInputStream(sc.getInputStream());
+              out = new DataOutputStream(sc.getOutputStream());
+          
+              // Leer mensajes del servidor en un hilo separado
+              Thread serverHandler = new Thread(() -> {
+                  try {
+                      while (true) {
+                          String mensaje = in.readUTF();
+                          textArea.append("Servidor: " + mensaje + "\n");
+                      }
+                  } catch (IOException ee) {
+                      textArea.append("Error al leer mensaje del servidor: " + ee.getMessage() + "\n");
+                  }
+              });
+              serverHandler.start();
+          
+              // Añadir un ActionListener al botón de enviar
+              sendButton.addActionListener(new ActionListener() {
+                  @Override
+                  public void actionPerformed(ActionEvent e) {
+                      try {
+                          String mensaje = textField.getText();
+                          out.writeUTF(mensaje);
+                          textArea.append("Cliente: " + mensaje + "\n");
+                          textField.setText("");
+                      } catch (IOException ex) {
+                          textArea.append("Error al enviar mensaje: " + ex.getMessage() + "\n");
+                      }
+                  }
+              });
+          
+          } catch (IOException eee) {
+              textArea.append("Error: " + eee.getMessage() + "\n");
+              eee.printStackTrace();
+          }
+          
+        }
+    });
+        PanelAzul.add(Con);
+      
+        JButton ConHo; 
+        ConHo = new JButton("<html><body>" + 
+        "<p style='text-align: center;'>Consultar</p>" + 
+        "<p style='text-align: center;'>Horarios<html></p>");
+        ConHo.setForeground(Color.white);
+        ConHo.setBounds(520, 45, 220, 40);
+        ConHo.setContentAreaFilled(false);
+        ConHo.setBorderPainted(false);
+        ConHo.setFocusPainted(false);
+        ConHo.addActionListener(new ActionListener() {
+                    @Override
+            public void actionPerformed(ActionEvent e) {
+                final String HOST = "192.168.0.11";  // Cambia esta IP por la del servidor
+                  final int PUERTO = 2000;
+                  DataInputStream in;    
+              
+              // Crear la ventana principal
+              JFrame frame = new JFrame("Consultar Horario limpieza");
+              frame.setSize(400, 300);
+              frame.setLayout(new BorderLayout());
+              
+              // Crear un área de texto para mostrar los mensajes
+              textArea = new JTextArea();
+              textArea.setEditable(false);
+              frame.add(new JScrollPane(textArea), BorderLayout.CENTER);
+              
+              // Crear un panel para el campo de texto y el botón
+              JPanel panel = new JPanel();
+              panel.setLayout(new BorderLayout());
+              
+              // Crear el campo de texto para escribir mensajes
+              JTextField textField = new JTextField();
+              panel.add(textField, BorderLayout.CENTER);
+              
+              // Crear el botón para enviar mensajes
+              JButton sendButton = new JButton("Enviar");
+              panel.add(sendButton, BorderLayout.EAST);
+              
+              frame.add(panel, BorderLayout.SOUTH);
+              
+              // Mostrar la ventana
+              frame.setVisible(true);
+              
+              try {
+                  Socket sc = new Socket(HOST, PUERTO);
+                  in = new DataInputStream(sc.getInputStream());
+                  out = new DataOutputStream(sc.getOutputStream());
+              
+                  // Leer mensajes del servidor en un hilo separado
+                  Thread serverHandler = new Thread(() -> {
+                      try {
+                          while (true) {
+                              String mensaje = in.readUTF();
+                              textArea.append("Servidor: " + mensaje + "\n");
+                          }
+                      } catch (IOException ee) {
+                          textArea.append("Error al leer mensaje del servidor: " + ee.getMessage() + "\n");
+                      }
+                  });
+                  serverHandler.start();
+              
+                  // Añadir un ActionListener al botón de enviar
+                  sendButton.addActionListener(new ActionListener() {
+                      @Override
+                      public void actionPerformed(ActionEvent e) {
+                          try {
+                              String mensaje = textField.getText();
+                              out.writeUTF(mensaje);
+                              textArea.append("Cliente: " + mensaje + "\n");
+                              textField.setText("");
+                          } catch (IOException ex) {
+                              textArea.append("Error al enviar mensaje: " + ex.getMessage() + "\n");
+                          }
+                      }
+                  });
+              
+              } catch (IOException eee) {
+                  textArea.append("Error: " + eee.getMessage() + "\n");
+                  eee.printStackTrace();
+              }
+              }
+        });
+            PanelAzul.add(ConHo);    
+
     
     JButton Consultar; 
     Consultar = new JButton("Consultar disponibilidad");
-    Consultar.setForeground(Color.white);
-    Consultar.setBounds(80, 45, 220, 40);
+    Consultar.setForeground(Color.black);
+    Consultar.setBounds(50, 15, 220, 40);
     Consultar.setContentAreaFilled(false);
     Consultar.setBorderPainted(false);
     Consultar.setFocusPainted(false);
     Consultar.addActionListener(new ActionListener() {
         @Override
 public void actionPerformed(ActionEvent e) {
-  Panel.setVisible(false);
-  PanelHabi.setVisible(true);
-  setContentPane(PanelHabi);
+ 
   final String HOST = "192.168.0.11";  // Cambia esta IP por la del servidor
     final int PUERTO = 2000;
     DataInputStream in;    
 
 // Crear la ventana principal
 JFrame frame = new JFrame("Consultar disponibilidad");
-frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 frame.setSize(400, 300);
 frame.setLayout(new BorderLayout());
 
@@ -349,13 +606,14 @@ try {
         }
     });
 
+
 } catch (IOException eee) {
     textArea.append("Error: " + eee.getMessage() + "\n");
     eee.printStackTrace();
 }
 }
 });
-      
+PanelHabi.add(Consultar);     
     setVisible(true);
 }//Fin del constructor
 
