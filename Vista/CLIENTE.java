@@ -2,6 +2,7 @@ package Vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,7 @@ private ImageIcon imagen;
 private Icon icono; 
 private JLabel LabelIma, LabelIma2, LabelIma3, LabelIma4, LabelIma5, LabelIma6, LabelIma7, LabelIma8;
 private JLabel LabEstrella, LabEstrella2, LabEstrella3;
+private JLabel Lab1, Lab2, Lab3, Lab4, Lab5, Lab6, Lab7, Lab8, Lab9, Lab10, Lab11, Lab12, Lab13, Lab14, Lab15; 
 private JPanel PanelAzul, PanelBlanco, PanelBlanco1, PanelBlanco2;
 public String mensaje;
 private static JTextArea textArea;
@@ -90,6 +92,95 @@ public CLIENTE(){
     LabEstrella3.setBounds(500, 10, 200, 30);  
     this.Pintar(this.LabEstrella3, "Imagenes\\5Estrellas.png");
 
+    Lab1 = new JLabel("Habitación Doble");
+    Lab1.setBounds(220, 5, 200, 30);
+    Font font = new Font("Arial", Font.BOLD, 15);
+    Lab1.setFont(font);
+    Lab1.setBackground(Color.black);
+
+    Lab2 = new JLabel("Habitación Individual");
+    Lab2.setBounds(220, 5, 200, 30);
+    Lab2.setFont(font);
+    Lab2.setBackground(Color.black);
+
+    Lab3 = new JLabel("Suite");
+    Lab3.setBounds(220, 5, 200, 30);
+    Lab3.setFont(font);
+    Lab3.setBackground(Color.black);
+
+    Lab4 = new JLabel("Precios desde");
+    Lab4.setBounds(620, 55, 200, 30);
+    Font fonte = new Font("Arial", Font.BOLD, 10);
+    Lab4.setFont(fonte);
+    Lab4.setBackground(Color.black);
+
+    Lab5 = new JLabel("Precios desde");
+    Lab5.setBounds(620, 55, 200, 30);
+    Lab5.setFont(fonte);
+    Lab5.setBackground(Color.black);
+
+    Lab6 = new JLabel("Precios desde");
+    Lab6.setBounds(620, 55, 200, 30);
+    Lab6.setFont(fonte);
+    Lab6.setBackground(Color.black);
+
+    Lab7 = new JLabel("CRC 70.000");
+    Lab7.setBounds(580, 80, 200, 30);
+    Font fon = new Font("Arial", Font.BOLD, 20);
+    Lab7.setFont(fon);
+    Lab7.setForeground(new Color(233, 18, 18));
+
+    Lab8 = new JLabel("CRC 79.500");
+    Lab8.setBounds(580, 80, 200, 30);
+    Lab8.setFont(fon);
+    Lab8.setForeground(new Color(233, 18, 18));
+
+    Lab9 = new JLabel("CRC 120.000");
+    Lab9.setBounds(575, 80, 200, 30);
+    Lab9.setFont(fon);
+    Lab9.setForeground(new Color(233, 18, 18));
+
+    Lab10 = new JLabel("Por noche");
+    Lab10.setBounds(633, 100, 200, 30);
+    Lab10.setFont(fonte);
+    Lab10.setBackground(Color.black);
+
+    Lab11 = new JLabel("Por noche");
+    Lab11.setBounds(633, 100, 200, 30);
+    Lab11.setFont(fonte);
+    Lab11.setBackground(Color.black);
+
+    Lab12 = new JLabel("Por noche");
+    Lab12.setBounds(633, 100, 200, 30);
+    Lab12.setFont(fonte);
+    Lab12.setBackground(Color.black);
+
+    Lab13 = new JLabel("<html><div style='text-align: justify;'>En nuestra acogedora habitación doble, diseñada "+ 
+    "para ofrecerte el máximo confort y una estancia inolvidable."+
+    " Perfecta para parejas, amigos o cualquier persona que busque un "+
+    "espacio elegante \n y funcional, nuestra habitación doble está equipada con todas las comodidades que necesitas.</div></html>");
+    Lab13.setBounds(220, 15, 350, 140);
+    Font fontee = new Font("Arial", Font.ITALIC, 12);
+    Lab13.setFont(fontee);
+    Lab13.setBackground(Color.black);
+
+    Lab14 = new JLabel("<html><div style='text-align: justify;'>Nuestra habitación individual con cama matrimonial"+
+    "es el refugio perfecto para parejas que buscan comodidad, privacidad y un"+ 
+    "ambiente acogedor. Diseñada para maximizar el confort en un espacio compacto. "+
+    "Esta habitación es ideal tanto para estancias cortas como largas.</div></html>");
+    Lab14.setBounds(220, 15, 350, 140);
+    Lab14.setFont(fontee);
+    Lab14.setBackground(Color.black);
+
+    Lab15 = new JLabel("<html><div style='text-align: justify;'>Bienvenido a nuestra suite, un espacio lujoso y "+
+    "espacioso diseñado para ofrecer el máximo confort y una experiencia inolvidable."+
+    "Perfecta para aquellos que buscan un nivel superior de comodidad y servicio,"+ 
+    "nuestra suite es ideal para parejas, familias o cualquier persona que desee"+
+    "disfrutar de un entorno exclusivo.</div></html>");
+    Lab15.setBounds(220, 15, 350, 140);
+    Lab15.setFont(fontee);
+    Lab15.setBackground(Color.black);
+
     //Creacion del panel principal
     JPanel Panel = new JPanel();
     setContentPane(Panel);
@@ -119,6 +210,11 @@ public CLIENTE(){
     PanelBlanco.add(LabelIma7);
     PanelBlanco.add(LabEstrella);
     PanelHabi.add(PanelBlanco);
+    PanelBlanco.add(Lab1);
+    PanelBlanco.add(Lab4);
+    PanelBlanco.add(Lab7);
+    PanelBlanco.add(Lab10);
+    PanelBlanco.add(Lab13);
 
     PanelBlanco1 = new JPanel();
     PanelBlanco1.setBounds(95, 240, 700, 170);
@@ -127,7 +223,11 @@ public CLIENTE(){
     PanelBlanco1.add(LabelIma6);
     PanelBlanco1.add(LabEstrella2);
     PanelHabi.add(PanelBlanco1);
-    
+    PanelBlanco1.add(Lab2);
+    PanelBlanco1.add(Lab5);
+    PanelBlanco1.add(Lab8);
+    PanelBlanco1.add(Lab11);
+    PanelBlanco1.add(Lab14);
 
     PanelBlanco2 = new JPanel();
     PanelBlanco2.setBounds(95, 420, 700, 170);
@@ -135,7 +235,12 @@ public CLIENTE(){
     PanelBlanco2.setLayout(null);
     PanelBlanco2.add(LabelIma8);
     PanelBlanco2.add(LabEstrella3);
+    PanelBlanco2.add(Lab3);
     PanelHabi.add(PanelBlanco2);
+    PanelBlanco2.add(Lab6);
+    PanelBlanco2.add(Lab9);
+    PanelBlanco2.add(Lab12);
+    PanelBlanco2.add(Lab15);
 
     JButton Reservar; 
     Reservar = new JButton("Reservar");
