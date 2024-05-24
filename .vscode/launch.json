@@ -12,6 +12,13 @@
             "name": "CLIENTE",
             "request": "launch",
             "mainClass": "Vista.CLIENTE",
+            "projectName": "Sockets_3290e9ec"
+        },
+        {
+            "type": "java",
+            "name": "CLIENTE",
+            "request": "launch",
+            "mainClass": "Vista.CLIENTE",
             "projectName": "Sockets_821e7408"
         },
         {
